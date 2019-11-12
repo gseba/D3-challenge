@@ -28,13 +28,13 @@ d3.csv("assets/data/data.csv", function(err, healthdata) {
  
   console.log(healthdata);
 
- // Step 1: Parse Data/Cast as numbers
+ // Parse Data
  healthdata.forEach(function(d) {
     d.poverty = +d.poverty;
     d.healthcare= +d.healthcare;  
   });
 
-// Step 2: Create scale functions
+// Create scale functions
 var xLinearScale = d3.scaleLinear()
   .domain([d3.min(healthdata, d => d.poverty)-0.5, d3.max(healthdata, d => d.poverty)+0.5, 30])
   .range([0, width]);
@@ -58,7 +58,7 @@ chart.append("g")
 //Create Circles
 var circlesGroup = chart.selectAll("circle").data(healthdata).enter();
   
-var cTip=circlesGroup
+var cirTip=circlesGroup
   .append("circle")  
   .classed("stateCircle", true)
   .attr("cx", d => xLinearScale(d.poverty))
@@ -86,10 +86,10 @@ var toolTip = d3.tip()
   });
 
 //Create tooltip in the chart
-cTip.call(toolTip);
+cirTip.call(toolTip);
 
 //Create event listeners to display and hide the tooltip
-cTip.on("mouseover", function(d) {
+cirTip.on("mouseover", function(d) {
   d3.select(this).style("stroke", "black")
   toolTip.show(d, this);
 })
