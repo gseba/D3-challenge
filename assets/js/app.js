@@ -58,7 +58,7 @@ chart.append("g")
 //Create Circles
 var circlesGroup = chart.selectAll("circle").data(healthdata).enter();
   
-var cirTip=circlesGroup
+var circle=circlesGroup
   .append("circle")  
   .classed("stateCircle", true)
   .attr("cx", d => xLinearScale(d.poverty))
@@ -86,10 +86,10 @@ var toolTip = d3.tip()
   });
 
 //Create tooltip in the chart
-cirTip.call(toolTip);
+circle.call(toolTip);
 
 //Create event listeners to display and hide the tooltip
-cirTip.on("mouseover", function(d) {
+circle.on("mouseover", function(d) {
   d3.select(this).style("stroke", "black")
   toolTip.show(d, this);
 })
